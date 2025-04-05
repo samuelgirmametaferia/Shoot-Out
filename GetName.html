@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image List</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #drop-area {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #image-list {
+            margin-top: 20px;
+        }
+
+        #image-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #image-list li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Drag and Drop Images Here</h1>
+
+    <div id="drop-area">
+        <p>Drag 'n' drop some images here, or click to select files</p>
+        <input type="file" id="file-input" multiple style="display: none">
+    </div>
+
+    <div id="image-list">
+        <h2>Image List</h2>
+        <ul>
+            <!-- Image names will be added here -->
+        </ul>
+    </div>
+
+    <script>
+        const dropArea = document.getElementById('drop-area');
+        const fileInput = document.getElementById('file-input');
+        const imageList = document.getElementById('image-list').querySelector('ul');
+
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false)
+        });
+
+        function preventDefaults (e) {
+            e.preventDefault()
+            e.stopPropagation()
+        }
+
+        // Highlight drop area when item is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false)
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false)
+        });
+
+        function highlight(e) {
+            dropArea.style.borderColor = '#007bff';
+        }
+
+        function unhighlight(e) {
+            dropArea.style.borderColor = '#ccc';
+        }
+
+        // Handle dropped files
+        dropArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            let dt = e.dataTransfer
+            let files = dt.files
+
+            handleFiles(files)
+        }
+
+        // Handle file input click
+        fileInput.addEventListener('change', function() {
+            handleFiles(this.files);
+        });
+
+        // Make drop area clickable
+        dropArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        function handleFiles(files) {
+            files = [...files]
+            files.forEach(processFile)
+        }
+
+        function processFile(file) {
+            const listItem = document.createElement('li');
+            listItem.textContent = file.name;
+            imageList.appendChild(listItem);
+        }
+    </script>
+
+</body>
+</html>
