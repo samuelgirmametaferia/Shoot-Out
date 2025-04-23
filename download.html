@@ -29,11 +29,19 @@
             Download for Windows (662 MB)
           </a>
         </li>
-        <li>Mac (1.6 GB unpacked) - 
-          <a href="https://drive.google.com/uc?export=download&id=1FrUWZBopvQLZCtY2HbACxhsTLMhsrQuE" class="downloadLink">
-            Download for Mac (681 MB)
-          </a>
+        <li>
+        <p><strong>IMPORTANT! Run this command on Mac:</strong></p>
+        <div style="background-color: #f5f5f5; padding: 10px; border: 1px solid #ccc; position: relative;">
+              <code id="macCommand">chmod a+x build-mac.app/Contents/MacOS/*</code>
+              <button onclick="copyCommand()" style="position: absolute; top: 5px; right: 5px;">Copy</button>
+        </div>
+        <br>
+                  Run Mac (1.6 GB unpacked) - 
+        <a href="https://drive.google.com/uc?export=download&id=1FrUWZBopvQLZCtY2HbACxhsTLMhsrQuE" class="downloadLink">
+                  Download for Mac (681 MB)
+        </a>
         </li>
+
         <li>Linux (1.7 GB unpacked) - 
           <a href="https://drive.google.com/uc?export=download&id=1iO2WNmfuI1kV2pfknifhiJ2DYK9DOuaO" class="downloadLink">
             Download for Linux (767 MB)
@@ -58,5 +66,16 @@
   <footer>
     <p>&copy; 2025 Outcast Studio</p>
   </footer>
+  <script>
+  function copyCommand() {
+    const command = document.getElementById("macCommand").innerText;
+    navigator.clipboard.writeText(command).then(() => {
+      alert("Command copied to clipboard!");
+    }, (err) => {
+      alert("Failed to copy command: " + err);
+    });
+  }
+</script>
+
 </body>
 </html>
